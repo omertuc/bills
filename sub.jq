@@ -21,6 +21,10 @@
             "currencyCode": "EUR",
             "amount": (.price.amount / 12 / .cycle.cycleDuration)
         } 
+        elif .cycle.cycleRhythm == 3 then {
+            "currencyCode": "EUR",
+            "amount": (.price.amount * 4.345)
+        } 
         else 
             .price
         end
@@ -36,6 +40,9 @@
         end
     )
     | {name, "price": .price.amount}
-][]
+] 
+| sort_by(.price) 
+| .[]
 # Convert to CSV
-| [.name, .price] | @csv
+| [.name, .price] 
+| @csv
